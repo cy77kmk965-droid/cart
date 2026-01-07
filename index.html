@@ -2,17 +2,16 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+
+  <!-- Viewport correto para PWA iOS -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
   <!-- PWA iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Meu Site">
-  <!-- Status bar branca -->
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-  <!-- Theme color branco (evita barra preta) -->
-  <meta name="theme-color" content="#ffffff">
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)">
+  <!-- Modo translúcido (único que permite "camuflar" a barra) -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <link rel="manifest" href="manifest.json">
 
@@ -27,30 +26,28 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      color-scheme: light;
       background: var(--branco-base);
+      color-scheme: light;
     }
 
+    /* Compensa a status bar */
     body {
+      padding-top: env(safe-area-inset-top);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: env(safe-area-inset-top);
     }
 
-    /* Faixa verde que acompanha a rolagem */
-    .topo {
+    /* Faixa que camufla a status bar preta */
+    .status-fake {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: env(safe-area-inset-top);
       width: 100%;
-      background: var(--verde-topo);
-    }
-
-    /* Conteúdo */
-    .conteudo {
-      width: 100%;
-      background: var(--branco-base);
-      display: flex;
-      justify-content: center;
+      background: var(--branco-base); /* pode trocar para verde se quiser */
+      z-index: 9999;
+      pointer-events: none;
     }
 
     img {
@@ -61,14 +58,19 @@
       outline: 0;
       box-shadow: none;
     }
+
+    /* Pequeno ajuste iOS */
+    @supports (-webkit-touch-callout: none) {
+      img { margin-bottom: -1px; }
+    }
   </style>
 </head>
 
 <body>
-  <div class="topo"></div>
+  <!-- Camuflagem da status bar -->
+  <div class="status-fake"></div>
 
-  <div class="conteudo">
-    <img src="E3C0F924-7309-4BC3-AF65-C711F06A306C.jpeg" alt="Minha Foto">
-  </div>
+  <!-- Conteúdo -->
+  <img src="E3C0F924-7309-4BC3-AF65-C711F06A306C.jpeg" alt="Minha Foto">
 </body>
 </html>
