@@ -4,14 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-  <!-- Configurações PWA -->
+  <!-- PWA iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Meu Site">
+  <!-- Status bar branca -->
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-  <!-- Mantém a barra verde -->
-  <meta name="theme-color" content="#297B42">
-  <meta name="theme-color" content="#297B42" media="(prefers-color-scheme: dark)">
+  <!-- Theme color branco (evita barra preta) -->
+  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)">
 
   <link rel="manifest" href="manifest.json">
 
@@ -27,16 +28,29 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background: linear-gradient(var(--verde-topo) 0%, var(--branco-base) 15%, var(--branco-base) 100%);
-      background-attachment: fixed;
       color-scheme: light;
+      background: var(--branco-base);
     }
 
     body {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      padding-top: env(safe-area-inset-top);
+    }
+
+    /* Faixa verde que acompanha a rolagem */
+    .topo {
+      width: 100%;
+      background: var(--verde-topo);
+    }
+
+    /* Conteúdo */
+    .conteudo {
+      width: 100%;
+      background: var(--branco-base);
+      display: flex;
+      justify-content: center;
     }
 
     img {
@@ -46,28 +60,15 @@
       border: 0;
       outline: 0;
       box-shadow: none;
-      margin-top: 0;
-    }
-
-    /* Camada verde sob a status bar (mantém o efeito translúcido da Apple) */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: env(safe-area-inset-top);
-      background: var(--verde-topo);
-      z-index: -1;
-    }
-
-    /* Corrige espaçamento no iOS */
-    @supports (-webkit-touch-callout: none) {
-      img { margin-bottom: -1px; }
     }
   </style>
 </head>
+
 <body>
-  <img src="E3C0F924-7309-4BC3-AF65-C711F06A306C.jpeg" alt="Minha Foto">
+  <div class="topo"></div>
+
+  <div class="conteudo">
+    <img src="E3C0F924-7309-4BC3-AF65-C711F06A306C.jpeg" alt="Minha Foto">
+  </div>
 </body>
 </html>
